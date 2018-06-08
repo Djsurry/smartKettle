@@ -7,3 +7,5 @@ heating element. Furthermore, there are some holes drilled near the bottom of th
 in which are som wires. They will check if there is electric current passing between them, meaning the water is at a 
 high enough level. This is so the thing doesnt go endlessly without water. Hard to replicate but maybe someone can use
 the code somehow
+
+The smart kettle folder is the app. I included all extra files because i use imports like alamofire so i thought this would be easier
