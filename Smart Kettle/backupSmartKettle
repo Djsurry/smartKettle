@@ -1,0 +1,112 @@
+//
+//  ViewController.swift
+//  Smart Kettle
+//
+//  Created by David Surry on 2018-05-08.
+//  Copyright © 2018 deejpake Studios. All rights reserved.
+//
+// DAVID IF U EVER NEED TO GO BACK TO HOW IT WAS
+// MAKE IT SO WHEN U CLICK A BUTTON IT CALLS
+// UPDATELOOP. ALSO CALL A LABEL CURRENT TEMP
+import UIKit
+import Alamofire
+import AudioToolbox
+var temp =  " "
+
+func updateLoop(callback: @escaping (_:String)->Void) -> Void {
+    let url = "http://192.168.2.40:5000/status"
+    Alamofire.request(url).responseJSON { response in
+        print("Request: \(String(describing: response.request))")   // original url request
+        print("Response: \(String(describing: response.response))") // http url response
+        print("Result: \(response.result)")                         // response serialization result
+        
+        if let json = response.result.value {
+            print("JSON: \(json)") // serialized json response
+           
+        }
+        
+        if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+            print("Data: \(utf8Text)") // original server data as UTF8 string
+            callback(utf8Text)
+        }
+    }
+    
+}
+
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+    @IBOutlet weak var hourLbl: UILabel!
+    @IBOutlet weak var currentTemp: UILabel!
+    @IBOutlet weak var pickerView: UIPickerView!
+    let hours = ["1", "2", "3" ,"4", "5", "6", "7", "8", "9", "10", "11", "12"]
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return hours.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return hours[row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        hourLbl.text = hours[row]
+    }
+    
+   
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        // Do any additional setup after loading the view, typically from a nib.
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    func finished(temperature:String) -> Void{
+        
+        currentTemp.text = temperature
+        print(currentTemp.text)
+        var temp:String! = currentTemp.text
+        
+        var intTemp:Int! = Int(Float(temp)!)
+        print(intTemp)
+        if intTemp < 97{
+            updateLoop(callback:finished)
+        }else{
+            currentTemp.text = "READY"
+            var i = 0
+            while i != 3{
+                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                i += 1
+            }
+        }
+
+    }
+    
+    
+    
+    
+    
+    
+
+
+        
+       
+        
+
+}
+
+

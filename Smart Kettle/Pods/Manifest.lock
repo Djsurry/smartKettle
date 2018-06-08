@@ -1,0 +1,24 @@
+PODS:
+  - Alamofire (4.4.0)
+  - SwiftSH (0.1.0):
+    - SwiftSH/Libssh2 (= 0.1.0)
+  - SwiftSH/Core (0.1.0)
+  - SwiftSH/Libssh2 (0.1.0):
+    - SwiftSH/Core
+
+DEPENDENCIES:
+  - Alamofire (= 4.4.0)
+  - SwiftSH
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - SwiftSH
+
+SPEC CHECKSUMS:
+  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  SwiftSH: bcbe8826153604f6923baf3e0b612bd186e153af
+
+PODFILE CHECKSUM: 48aea6a7b4f3a81344887c80d75bb97fe287d9fc
+
+COCOAPODS: 1.5.0
